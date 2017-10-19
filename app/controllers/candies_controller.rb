@@ -11,7 +11,9 @@ class CandyController < ApplicationController
   end
 
   get '/candies/new' do
+    @candy = Candy.find_by(id: params[:id])
     if logged_in?
+      @user = current_user
       erb :'/candies/new_candy'
     else
       redirect '/login'
@@ -19,8 +21,23 @@ class CandyController < ApplicationController
   end
 
   post '/candies' do
-    "Hello World"
+    @user = current_user
+    @candy = Candy.create(name: params[:name])
+    @user.candies << @candy
+    redirect '/candies/:id'
   end
+
+  get '/candies/:id' do
+    @candy = Candy.find_by(id: params[:id])
+    if logged_in?
+      @user = current_user
+      erb :'candies/show'
+    else
+      redirect '/login'
+    end
+  end
+
+
 
 
 
