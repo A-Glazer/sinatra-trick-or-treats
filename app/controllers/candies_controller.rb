@@ -5,6 +5,7 @@ class CandyController < ApplicationController
   get '/candies' do
     if logged_in? && current_user
       @user = current_user
+      session[:user_id] = @user.id
       @candies = Candy.all
       erb :'/candies/home'
     else
@@ -17,6 +18,7 @@ class CandyController < ApplicationController
     @candy = Candy.find_by(id: params[:id])
     if logged_in? && current_user
       @user = current_user
+      session[:user_id] = @user.id
       erb :'/candies/new_candy'
     else
       #flash message to login or signup
@@ -30,6 +32,8 @@ class CandyController < ApplicationController
     @candy = Candy.create(name: params[:name])
     @user.candies << @candy
     redirect '/candies'
+    else
+      redirect '/candies/new'
     end
   end
 
@@ -54,21 +58,22 @@ class CandyController < ApplicationController
   end
 
   patch '/candies/:id' do
-    @candy = Candy.find_by(id: params[:id])
-    if logged_in? && @candy.user == current_user && !params[:name].empty?
-      @user = current_user
+    binding.pry
+    @candy = Candy.find_by(user_id: params[:user_id])
+    if logged_in? && @candy.user_id == current_user && !params[:name].empty?
       @candy.update(name: params[:name])
       @candy.save
+      binding.pry
       redirect "/candies/#{@candy.id}"
     else
       redirect "/candies/#{@candy.id}/edit"
     end
   end
 
-  delete '/candies/:id/delete' do
+  delete '/candies/:id' do
     @candy = Candy.find_by(id: params[:id])
     @user = current_user
-    if logged_in? && @candy.user == current_user
+    if logged_in? && @candy.user_id == current_user
       @candy.delete
       redirect '/candies'
     else
