@@ -43,7 +43,6 @@ class UserController < ApplicationController
 
   get '/users/:slug' do
     @user = User.find_by_slug(params[:slug])
-    @user.candies << Candy.find_by(user_id: params[:user_id])
        erb :'/users/usersprofile'
   end
 
