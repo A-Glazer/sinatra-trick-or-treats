@@ -1,7 +1,6 @@
-<center>Hello <%= @user.username.capitalize %>
+<center><h1><font color="orange"><%= @user.username.capitalize %>'s candies</font></h2>
 
 <br>
-Your Candy:
 <br>
 <br>
 <% @candies.each do |c| %>
@@ -10,5 +9,4 @@ Your Candy:
 <% end %>
 <br>
 
-<a href="/candies/new">Got new?</a>
-<a href="/sessions/logout">Log Out</a>
+<a href="/users/:id">Your Profile</a>

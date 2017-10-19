@@ -1,3 +1,4 @@
+require 'pry'
 class UserController < ApplicationController
 
   get '/signup' do
@@ -23,7 +24,7 @@ class UserController < ApplicationController
     if !logged_in?
     erb :'/users/login'
     else
-      redirect '/candies'
+      redirect '/candies' #need to figure out where this should redirect
     end
   end
 
@@ -31,12 +32,23 @@ class UserController < ApplicationController
       @user = User.find_by(username: params[:username])
       if @user && @user.authenticate(params[:password])
         session[:user_id] = @user.id
-        redirect '/candies'
+        redirect '/candies' #need to figure out where this should redirect
       else
         #should have error message about info not being valid
         redirect '/login'
       end
   end
+
+  get '/users/:id' do
+    @candies = Candy.find_by(name: params[:name])
+    @user = User.find_by(username: params[:username])
+    if logged_in? && current_user
+       @user = current_user
+       erb :'/users/usersprofile'
+     else
+       redirect '/'
+     end
+    end
 
   get '/sessions/logout' do
     session.clear
