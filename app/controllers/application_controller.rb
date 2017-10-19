@@ -13,6 +13,7 @@ class ApplicationController < Sinatra::Base
     erb :homepage
   end
 
+
   helpers do
 
     def current_user

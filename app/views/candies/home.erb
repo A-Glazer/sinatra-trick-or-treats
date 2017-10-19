@@ -1,0 +1,12 @@
+<center>Hello <%= @user.username.capitalize %>
+
+<br>
+Your Candy:
+<br>
+<% @candies.each do |c| %>
+<%= c.name %>
+<% end %>
+<br>
+
+<a href="/candies/new">Got new?</a>
+<a href="/sessions/logout">Log Out</a>
