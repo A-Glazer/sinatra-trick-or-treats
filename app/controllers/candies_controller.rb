@@ -44,6 +44,38 @@ class CandyController < ApplicationController
     end
   end
 
+  get '/candies/:id/edit' do
+    @candy = Candy.find_by(id: params[:id])
+    if logged_in? && @candy.user == current_user
+      erb :'candies/edit'
+    else
+      redirect '/'
+    end
+  end
+
+  patch '/candies/:id' do
+    @candy = Candy.find_by(id: params[:id])
+    if logged_in? && @candy.user == current_user && !params[:name].empty?
+      @user = current_user
+      @candy.update(name: params[:name])
+      @candy.save
+      redirect "/candies/#{@candy.id}"
+    else
+      redirect "/candies/#{@candy.id}/edit"
+    end
+  end
+
+  delete '/candies/:id/delete' do
+    @candy = Candy.find_by(id: params[:id])
+    @user = current_user
+    if logged_in? && @candy.user == current_user
+      @candy.delete
+      redirect '/candies'
+    else
+      redirect "/candies/#{@candy.id}"
+    end
+  end
+
 
 
 

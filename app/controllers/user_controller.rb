@@ -6,7 +6,7 @@ class UserController < ApplicationController
     erb :'/users/new_user'
     else
       @user = current_user
-      redirect "/users/#{@user.slug}" 
+      redirect "/users/#{@user.slug}"
     end
   end
 
@@ -42,11 +42,12 @@ class UserController < ApplicationController
   end
 
   get '/users/:slug' do
-    @user = User.find_by_slug(params[:username])
+    @user = User.find_by_slug(params[:slug])
+    @user.candies << Candy.find_by(user_id: params[:user_id])
        erb :'/users/usersprofile'
   end
 
-  get '/sessions/logout' do
+  get '/logout' do
     session.clear
     redirect '/'
   end

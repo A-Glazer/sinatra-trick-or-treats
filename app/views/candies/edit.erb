@@ -1,0 +1,5 @@
+<form action="/candies/<%= @candy.id %>" method="post">
+  <input id="hidden" type="hidden" name="_method" value="patch">
+  <input type="text" name="name">
+  <input type="submit" value="Change">
+</form>
