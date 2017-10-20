@@ -1,9 +1,8 @@
-new candy
-
-
-
-<form action="/candies/<%= @candy.id %>">
-      <input type="submit" value="Create" />
+<center><h1><font color="orange"><%= @candy.name %></h1></font>
+  <br>
+  <br>
+<form action="/candies/<%= @candy.id %>/edit">
+      <input type="submit" value="edit" />
   </form>
 <br>
 <br>
@@ -11,3 +10,6 @@ new candy
     <input id="hidden" type="hidden" name="_method" value="delete">
     <input type="submit" value="delete" id="Delete">
   </form>
+  <br>
+  <br>
+  <a href="/users/:id">Homepage</a>
