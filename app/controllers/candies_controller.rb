@@ -1,7 +1,5 @@
 class CandyController < ApplicationController
 
-# this route goes to candy home page with all candies
-# all users can see this, should not have edit, delete buttons(others cant edit)
   get '/candies' do
     if logged_in? && current_user
       @user = current_user
@@ -9,7 +7,6 @@ class CandyController < ApplicationController
       @candies = Candy.all
       erb :'/candies/home'
     else
-      #flash message to login or signup
       redirect '/'
     end
   end
@@ -21,7 +18,7 @@ class CandyController < ApplicationController
       session[:user_id] = @user.id
       erb :'/candies/new_candy'
     else
-      #flash message to login or signup
+      flash[:notice] = "You're not logged in"
       redirect '/'
     end
   end
@@ -43,7 +40,7 @@ class CandyController < ApplicationController
       @candy = Candy.find_by(id: params[:id])
       erb :'candies/show'
     else
-      #flash message to login or signup
+      flash[:message] = "You're not logged in"
       redirect '/'
     end
   end
@@ -53,6 +50,7 @@ class CandyController < ApplicationController
       @candy = Candy.find_by(id: params[:id])
       erb :'candies/edit'
     else
+      flash[:notice] = "You're not logged in"
       redirect '/'
     end
   end
@@ -64,18 +62,8 @@ class CandyController < ApplicationController
       @candy.save
       redirect "/candies/#{@candy.id}"
     else
+      flash[:notice] = "Invalid Fields"
       redirect "/candies/#{params[:id]}/edit"
-    end
-  end
-
-  delete '/candies/:id' do
-    @candy = Candy.find_by(id: params[:id])
-    @user = current_user
-    if logged_in? 
-      @candy.delete
-      redirect '/candies'
-    else
-      redirect "/candies/#{@candy.id}"
     end
   end
 
@@ -89,9 +77,5 @@ class CandyController < ApplicationController
       redirect "/candies/#{@candy.id}"
     end
   end
-
-
-
-
 
 end
