@@ -1,5 +1,15 @@
-<form action="/candies/<%= @candy.id %>" method="patch">
+<center><h1><font color="darkorange"><%= @candy.name %></h1></font>
+
+<form action="/candies/<%= @candy.id %>" method="post">
   <input id="hidden" type="hidden" name="_method" value="patch">
-  <input type="text" name="name" value="<%= @candy.name %>">
+  <input type="text" name="name"><br>
+  <br>
   <input type="submit" value="Change">
+</form>
+
+or
+
+<form action="" method="post">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <input type="submit" value="delete" id="Delete">
 </form>

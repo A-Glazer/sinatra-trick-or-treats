@@ -1,6 +1,10 @@
-<center><h1><font color="orange">Your candies</font></h2>
+<center><h1><font color="orange">All of your candies:</font></h2>
 
-i need to have this page list a particular users items.
+<% @user.candies.each.with_index do |c| %>
+<font color="orange">><%= c.name %><br></font>
+<br>
+<% end %>
+
 
 <br>
 
